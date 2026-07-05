@@ -186,7 +186,9 @@ app.get('/api/health', (req, res) => {
 // ==============================
 // NOTE: Update these values to your desired admin credentials.
 const ADMIN_USERNAME = 'admin';
-const ADMIN_PASSWORD = '0776787547';
+// إلغاء كلمة المرور (دخول بدون كلمة سر) لتجربة نشر المقال من الهاتف
+const ADMIN_PASSWORD = '';
+
 
 function unauthorized(res) {
   return res.status(401).json({ error: 'Unauthorized' });
