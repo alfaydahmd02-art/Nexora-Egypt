@@ -186,7 +186,7 @@ app.get('/api/health', (req, res) => {
 // ==============================
 // NOTE: Update these values to your desired admin credentials.
 const ADMIN_USERNAME = 'admin';
-const ADMIN_PASSWORD = 'change-me';
+const ADMIN_PASSWORD = '0776787547';
 
 function unauthorized(res) {
   return res.status(401).json({ error: 'Unauthorized' });
