@@ -42,18 +42,35 @@ html, body {
 /* Avoid accidental overflow caused by absolute/fixed/animated elements */
 img, video, canvas, svg { max-width: 100%; height: auto; }
 
-/* Hard stop for any element that tries to exceed the viewport */
-* { max-width: 100%; }
-
 /* Extra guard against horizontal overflow on mobile (especially with fixed/animated elements) */
-html { overflow-x: hidden; }
-body { overflow-x: hidden; }
+html { overflow-x: clip; }
+body { overflow-x: clip; }
+
+/* Avoid breaking layout by forcing every element to be max-width:100% (can cause unexpected overflow in some browsers) */
+img, video, canvas, svg { max-width: 100%; height: auto; }
+
 
 /* Prevent layout shifts from transforms from creating an overflow viewport */
 body { position: relative; }
 
 /* Ensure main container/content doesn't force wider layout */
 #main { width: 100%; max-width: 100%; }
+.container { width: 92%; max-width: 1200px; }
+
+/* Safe-area padding for fixed elements on iPhone/iOS */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Prevent fixed language toggles or other fixed elements from triggering overflow */
+*[style*="position:fixed"] {
+  max-width: calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right));
+}
+
+
 
 
 
@@ -552,6 +569,26 @@ input:focus, textarea:focus{border-color: rgba(34,211,238,.35); box-shadow: 0 0 
   .h2{font-size:24px;}
   .stats{grid-template-columns: 1fr;}
 
+  /* Force Contact section/form to stay within viewport on small screens */
+  #contact,
+  #contact .container,
+  #contact .grid-2,
+  #contact .glass,
+  #contact form,
+  #contact label,
+  #contact input,
+  #contact textarea {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  #contact .grid-2{grid-template-columns: 1fr;}
+  #contact textarea{resize: none;}
+
+  /* Avoid horizontal overflow from any long content */
+  #contact input,
+  #contact textarea{overflow-x: hidden;}
+
   /* Prevent absolute decorative elements from creating horizontal overflow */
   .s1{left:-10px;}
   .s2{right:-10px;}
@@ -560,4 +597,5 @@ input:focus, textarea:focus{border-color: rgba(34,211,238,.35); box-shadow: 0 0 
 
   .float-item{display:none;}
 }
+
 
